@@ -1,0 +1,138 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Portfolio</title>
+      <!-- Favicons -->
+  <link href="{% static 'img/favicon.png' %}" rel="icon">
+  <link href="{% static 'img/apple-touch-icon.png' %}" rel="apple-touch-icon">
+
+  <!-- Vendor CSS Files -->
+  <link href="{% static 'vendor/bootstrap/css/bootstrap.min.css' %}" rel="stylesheet">
+  <link href="{% static 'vendor/bootstrap-icons/bootstrap-icons.css' %}" rel="stylesheet">
+  <link href="{% static 'vendor/glightbox/css/glightbox.min.css' %}" rel="stylesheet">
+  <link href="{% static 'vendor/swiper/swiper-bundle.min.css' %}" rel="stylesheet">
+  <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
+  <!-- Template Main CSS File -->
+  <link href="{% static 'css/style.css' %}" rel="stylesheet">
+
+</head>
+<body>
+    <header id="header" class="fixed-top">
+        <div class="container d-flex align-items-center justify-content-between">
+    
+          <h1 class="logo"><a href="{% url 'home' %}">Home</a></h1>
+          <!-- Uncomment below if you prefer to use an image logo -->
+          <!-- <a href="index.html" class="logo"><img src="assets/img/logo.png" alt="" class="img-fluid"></a>-->
+    
+          <nav id="navbar" class="navbar">
+            <ul>
+              <li><a class="nav-link scrollto " href="{% url 'home' %}">Home</a></li>
+              <li><a class="nav-link scrollto" href="{% url 'home' %}#about">About</a></li>
+              <li><a class="nav-link scrollto" href="{% url 'home' %}#services">Services</a></li>
+              <li><a class="nav-link scrollto " href="{% url 'home' %}#work">Work</a></li>
+            </ul>
+            <i class="bi bi-list mobile-nav-toggle"></i>
+          </nav><!-- .navbar -->
+        </div>
+      </header><!-- End Header -->
+    
+      <div class="hero hero-single route bg-image" style="background-image: url({%static 'img/overlay-bg.jpg' %})">
+        <div class="overlay-mf"></div>
+        <div class="hero-content display-table">
+          <div class="table-cell">
+            <div class="container">
+              <h2 class="hero-title mb-4">Details</h2>
+              <ol class="breadcrumb d-flex justify-content-center">
+                <li class="breadcrumb-item">
+                  <a href="{% url 'home' %}">Home</a>
+                </li>
+                <li class="breadcrumb-item active">{{blog.title}}</li>
+              </ol>
+            </div>
+          </div>
+        </div>
+      </div>
+    
+
+    <section id="work" class="portfolio-mf sect-pt4 route">
+        <div class="container">
+          <div class="row">
+            <div class="col-sm-12">
+              <div class="title-box text-center">
+                <h3 class="title-a">
+                  My blog
+                </h3>
+                <p class="subtitle-a">
+                  Find Out Last News
+                </p>
+                <div class="line-mf"></div>
+              </div>
+            </div>
+          </div>
+          <div class="row mb-5">
+            <form action="{% url 'blogs' %}#row" method="post">
+              <div class="input-group">
+                <input type="search" name="search" class="form-control rounded" placeholder="Search" aria-label="Search" aria-describedby="search-addon" />
+                {% csrf_token %}
+                <select name="cat"  id="">
+                  <option value="" selected>Category</option>
+                  {% for i in category %}
+                  <option value="{{i}}">{{i}}</option>
+                  {% endfor %}
+                </select>
+                <button type="submit" class="btn btn-outline-primary">search</button>
+              </div>
+            </form>
+          </div>
+          <div id="row" class="row">
+            
+            {% for i in blog %}
+            <div class="col-md-4" data-aos="zoom-in">
+              <div class="work-box">
+                <a href="{{i.Main_photo.url}}" data-gallery="portfolioGallery" class="portfolio-lightbox">
+                  <div class="work-img">
+                    <img src="{{i.Main_photo.url}}" alt="" class="img-fluid">
+                  </div>
+                </a>
+                <div class="work-content">
+                  <div class="row">
+                    <div class="col-sm-8">
+                      <h2 class="w-title">{{i.title}}</h2>
+                      <div class="w-more">
+                        <span class="w-ctegory">{{i.category}}</span> / <span class="w-date">{{i.created}}</span>
+                      </div>
+                    </div>
+                    <div class="col-sm-4">
+                      <div class="w-like">
+                        <a href="{% url 'blog' i.id %}"> <span class="bi bi-plus-circle"></span></a>
+                      </div>  
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+              
+            {% endfor %}
+              
+            
+          </div>
+        </div>
+      </section>
+      <script src="{% static 'vendor/purecounter/purecounter_vanilla.js' %}"></script>
+      <script src="{% static 'vendor/bootstrap/js/bootstrap.bundle.min.js' %}"></script>
+      <script src="{% static 'vendor/glightbox/js/glightbox.min.js' %}"></script>
+      <script src="{% static 'vendor/swiper/swiper-bundle.min.js' %}"></script>
+      <script src="{% static 'vendor/typed.js/typed.min.js' %}"></script>
+      <script src="{% static 'vendor/php-email-form/validate.js' %}"></script>
+      <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+      <!-- Template Main JS File -->
+      <script src="{% static 'js/main.js' %}"></script>
+      <script>
+        AOS.init();
+      </script>
+</body>
+</html>
